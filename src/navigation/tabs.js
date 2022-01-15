@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet } from "react-native";
-import { View, TextField, Text, Button, Image } from "react-native-ui-lib";
+import { View, Text, Image, TouchableOpacity } from "react-native-ui-lib";
 
 import HomeScreen from "../screens/HomeScreen";
 import BoxScreen from "../screens/BoxScreen";
@@ -27,40 +27,32 @@ const tabsProps = [
   },
 ];
 
-const Tabs = () => {
-  const tabBlock = tabsProps.map((tab, index) => {
-    return (
-      <Tab.Screen
-        key={tab.name}
-        name={tab.name}
-        component={tab.componentName}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Image
-                source={tab.iconPath}
-                resizeMode="contain"
-                style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? "#e32f45" : "#748c94",
-                }}
-              />
-              <Text
-                style={{
-                  color: focused ? "#e32f45" : "#748c94",
-                  fontSize: 12,
-                }}
-              >
-                {tab.name}
-              </Text>
-            </View>
-          ),
+const CustomTabBarButton = ({ children, action }) => {
+  return (
+    <TouchableOpacity
+      style={{
+        top: -20,
+        justifyContent: "center",
+        alignItems: "center",
+        ...styles.shadow,
+      }}
+      onPress={action}
+    >
+      <View
+        style={{
+          width: 65,
+          height: 65,
+          borderRadius: 35,
+          backgroundColor: "#e32f45",
         }}
-      />
-    );
-  });
+      >
+        {children}
+      </View>
+    </TouchableOpacity>
+  );
+};
 
+const Tabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -74,7 +66,84 @@ const Tabs = () => {
         ],
       }}
     >
-      {tabBlock}
+      <Tab.Screen
+        key="Home"
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <Image
+                source={require("../../assets/home-solid.png")}
+                resizeMode="contain"
+                style={{
+                  width: 25,
+                  height: 25,
+                  tintColor: focused ? "#e32f45" : "#748c94",
+                }}
+              />
+              <Text
+                style={{
+                  color: focused ? "#e32f45" : "#748c94",
+                  fontSize: 12,
+                }}
+              >
+                Home
+              </Text>
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Post"
+        component={ColorScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <Image
+                source={require("../../assets/plus-solid.png")}
+                resizeMode="contain"
+                style={{
+                  width: 25,
+                  height: 25,
+                  tintColor: "#fff",
+                }}
+              />
+            </View>
+          ),
+          tabBarButton: (props) => {
+            return <CustomTabBarButton {...props} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        key="Tasks"
+        name="Tasks"
+        component={BoxScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <Image
+                source={require("../../assets/tasks-solid.png")}
+                resizeMode="contain"
+                style={{
+                  width: 25,
+                  height: 25,
+                  tintColor: focused ? "#e32f45" : "#748c94",
+                }}
+              />
+              <Text
+                style={{
+                  color: focused ? "#e32f45" : "#748c94",
+                  fontSize: 12,
+                }}
+              >
+                Tasks
+              </Text>
+            </View>
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
