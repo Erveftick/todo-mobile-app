@@ -1,12 +1,11 @@
 import React from "react";
+import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import {
-  FlatList,
   View,
+  TextField,
   Text,
-  StyleSheet,
   Button,
-  TouchableOpacity,
-} from "react-native";
+} from "react-native-ui-lib";
 
 const HomeScreen = ({ navigation }) => {
   const buttons = [
@@ -28,7 +27,8 @@ const HomeScreen = ({ navigation }) => {
         renderItem={({ item }) => {
           return (
             <Button
-              title={item.name}
+              style={styles.buttonStyle}
+              label={item.name}
               onPress={() => navigation.navigate(item.name)}
             />
           );
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     marginVertical: 10,
-    paddingBottom: 10,
   },
 });
 

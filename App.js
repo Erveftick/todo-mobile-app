@@ -1,5 +1,8 @@
+import React from "react";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
+import { NavigationContainer } from "@react-navigation/native";
+
 import HomeScreen from "./src/screens/HomeScreen";
 import ComponentsScreen from "./src/screens/ComponentsScreen";
 import ListScreen from "./src/screens/ListScreen";
@@ -8,6 +11,15 @@ import CounterScreen from "./src/screens/CounterScreen";
 import ColorScreen from "./src/screens/ColorScreen";
 import InputScreen from "./src/screens/InputScreen";
 import BoxScreen from "./src/screens/BoxScreen";
+import Tabs from "./src/navigation/tabs";
+
+const App = () => {
+  return(
+    <NavigationContainer>
+      <Tabs />
+    </NavigationContainer>
+  )
+}
 
 const navigator = createStackNavigator(
   {
@@ -28,4 +40,5 @@ const navigator = createStackNavigator(
   }
 );
 
-export default createAppContainer(navigator);
+export default App;
+// export default createAppContainer(navigator);
