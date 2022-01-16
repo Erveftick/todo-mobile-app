@@ -7,25 +7,15 @@ import HomeScreen from "../screens/HomeScreen";
 import TasksScreen from "../screens/TasksScreen";
 import ColorScreen from "../screens/ColorScreen";
 
-const Tab = createBottomTabNavigator();
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faCoffee,
+  faHome,
+  faList,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
-const tabsProps = [
-  {
-    name: "Home",
-    iconPath: require("../../assets/home-solid.png"),
-    componentName: HomeScreen,
-  },
-  {
-    name: " ",
-    iconPath: require("../../assets/plus-solid.png"),
-    componentName: TasksScreen,
-  },
-  {
-    name: "Tasks",
-    iconPath: require("../../assets/tasks-solid.png"),
-    componentName: ColorScreen,
-  },
-];
+const Tab = createBottomTabNavigator();
 
 const CustomTabBarButton = ({ children, action }) => {
   return (
@@ -54,6 +44,30 @@ const CustomTabBarButton = ({ children, action }) => {
 };
 
 const Tabs = () => {
+  const TabScreenView = ({ name, icon, focused }) => {
+    return (
+      <View style={{ alignItems: "center", justifyContent: "center" }}>
+        <FontAwesomeIcon
+          icon={icon}
+          resizeMode="contain"
+          style={{
+            width: 50,
+            height: 50,
+            color: focused ? "#5848FF" : "#748c94",
+          }}
+        />
+        <Text
+          style={{
+            color: focused ? "#5848FF" : "#748c94",
+            fontSize: 12,
+          }}
+        >
+          {name}
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -73,41 +87,25 @@ const Tabs = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Image
-                source={require("../../assets/home-solid.png")}
-                resizeMode="contain"
-                style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? "#5848FF" : "#748c94",
-                }}
-              />
-              <Text
-                style={{
-                  color: focused ? "#5848FF" : "#748c94",
-                  fontSize: 12,
-                }}
-              >
-                Home
-              </Text>
-            </View>
+            <TabScreenView focused={focused} icon={faHome} name="Home" />
           ),
         }}
       />
       <Tab.Screen
+        key="Post"
         name="Post"
         component={ColorScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
-              <Image
-                source={require("../../assets/plus-solid.png")}
+              <FontAwesomeIcon
+                icon={faPlus}
                 resizeMode="contain"
                 style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: "#fff",
+                  width: 50,
+                  height: 50,
+                  color: "#fff",
+                  ...styles.shadow,
                 }}
               />
             </View>
@@ -123,25 +121,7 @@ const Tabs = () => {
         component={TasksScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Image
-                source={require("../../assets/tasks-solid.png")}
-                resizeMode="contain"
-                style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? "#5848FF" : "#748c94",
-                }}
-              />
-              <Text
-                style={{
-                  color: focused ? "#5848FF" : "#748c94",
-                  fontSize: 12,
-                }}
-              >
-                Tasks
-              </Text>
-            </View>
+            <TabScreenView focused={focused} icon={faList} name="Tasks" />
           ),
         }}
       />
