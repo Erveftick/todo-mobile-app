@@ -8,12 +8,7 @@ import TasksScreen from "../screens/TasksScreen";
 import ColorScreen from "../screens/ColorScreen";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import {
-  faCoffee,
-  faHome,
-  faList,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faList, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Tab = createBottomTabNavigator();
 
