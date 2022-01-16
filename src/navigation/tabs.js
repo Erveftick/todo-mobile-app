@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import { View, Text, Image, TouchableOpacity } from "react-native-ui-lib";
 
 import HomeScreen from "../screens/HomeScreen";
-import BoxScreen from "../screens/BoxScreen";
+import TasksScreen from "../screens/TasksScreen";
 import ColorScreen from "../screens/ColorScreen";
 
 const Tab = createBottomTabNavigator();
@@ -18,7 +18,7 @@ const tabsProps = [
   {
     name: " ",
     iconPath: require("../../assets/plus-solid.png"),
-    componentName: BoxScreen,
+    componentName: TasksScreen,
   },
   {
     name: "Tasks",
@@ -43,7 +43,8 @@ const CustomTabBarButton = ({ children, action }) => {
           width: 65,
           height: 65,
           borderRadius: 35,
-          backgroundColor: "#e32f45",
+          backgroundColor: "#5848FF",
+          ...styles.shadow,
         }}
       >
         {children}
@@ -79,12 +80,12 @@ const Tabs = () => {
                 style={{
                   width: 25,
                   height: 25,
-                  tintColor: focused ? "#e32f45" : "#748c94",
+                  tintColor: focused ? "#5848FF" : "#748c94",
                 }}
               />
               <Text
                 style={{
-                  color: focused ? "#e32f45" : "#748c94",
+                  color: focused ? "#5848FF" : "#748c94",
                   fontSize: 12,
                 }}
               >
@@ -119,7 +120,7 @@ const Tabs = () => {
       <Tab.Screen
         key="Tasks"
         name="Tasks"
-        component={BoxScreen}
+        component={TasksScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -129,12 +130,12 @@ const Tabs = () => {
                 style={{
                   width: 25,
                   height: 25,
-                  tintColor: focused ? "#e32f45" : "#748c94",
+                  tintColor: focused ? "#5848FF" : "#748c94",
                 }}
               />
               <Text
                 style={{
-                  color: focused ? "#e32f45" : "#748c94",
+                  color: focused ? "#5848FF" : "#748c94",
                   fontSize: 12,
                 }}
               >
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
     shadowColor: "#7F5DF0",
     shadowOffset: {
       width: 0,
-      height: 10,
+      height: 8,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
