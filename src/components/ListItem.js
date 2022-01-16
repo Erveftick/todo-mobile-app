@@ -11,13 +11,16 @@ import {
 } from "react-native-ui-lib";
 
 const TaskListItem = (props) => {
-  console.log(props);
-  const [checkboxState, useCheckboxState] = useState(false);
+  const [checkboxState, useCheckboxState] = useState(props.checked || false);
 
   return (
     <View style={{ flexDirection: "row", marginVertical: 7 }}>
       <View style={[styles.taskBox]}>
-        <Text style={[styles.taskTitle]}>{props.title}</Text>
+        <Text
+          style={[styles.taskTitle, checkboxState ? styles.checkedTitle : styles.defaultTitle]}
+        >
+          {props.title}
+        </Text>
         <Text style={[styles.taskTime]}>{props.time}</Text>
       </View>
       <Checkbox
@@ -27,7 +30,7 @@ const TaskListItem = (props) => {
         onValueChange={() => useCheckboxState(!checkboxState)}
         style={[
           styles.checkboxStyles,
-          checkboxState ? styles.checkboxShadow : null,
+          checkboxState ? styles.checkboxShadow : null
         ]}
       />
     </View>
@@ -44,6 +47,15 @@ const styles = StyleSheet.create({
   checkboxStyles: {
     width: 30,
     marginRight: 15,
+  },
+  defaultTitle: {
+    color: "black",
+    textDecorationStyle: "solid",
+  },
+  checkedTitle: {
+    textDecorationLine: "line-through",
+    textDecorationStyle: "solid",
+    color: "#4548FF",
   },
   checkboxShadow: {
     shadowColor: "#4548FF",
