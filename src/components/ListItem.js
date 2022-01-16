@@ -1,31 +1,35 @@
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, View, Text } from "react-native-ui-lib";
+import BoxScreen from "../screens/BoxScreen";
 
 const TaskListItem = ({ data, action }) => {
   return (
-    <View style={{ flexDirection: "row", marginVertical: 7 }}>
-      <View style={[styles.taskBox]}>
-        <Text
+    <BoxScreen>
+      <View style={{ flexDirection: "row", marginVertical: 7 }}>
+        <View style={[styles.taskBox]}>
+          <Text
+            style={[
+              styles.taskTitle,
+              data.completed ? styles.completedTitle : styles.defaultTitle,
+            ]}
+          >
+            {data.title}
+          </Text>
+          <Text style={[styles.taskTime]}>{data.time}</Text>
+        </View>
+        <Checkbox
+          containerStyle={{ marginBottom: 20, marginLeft: 15 }}
+          value={data.completed}
+          size={30}
+          onValueChange={() => action({ id: data.id })}
           style={[
-            styles.taskTitle,
-            data.completed ? styles.completedTitle : styles.defaultTitle,
+            styles.checkboxStyles,
+            data.completed ? styles.checkboxShadow : null,
           ]}
-        >
-          {data.title}
-        </Text>
-        <Text style={[styles.taskTime]}>{data.time}</Text>
+        />
       </View>
-      <Checkbox
-        containerStyle={{ marginBottom: 20, marginLeft: 15 }}
-        value={data.completed}
-        onValueChange={() => action({id: data.id})}
-        style={[
-          styles.checkboxStyles,
-          data.completed ? styles.checkboxShadow : null,
-        ]}
-      />
-    </View>
+    </BoxScreen>
   );
 };
 
@@ -37,8 +41,8 @@ const styles = StyleSheet.create({
   taskTitle: { fontSize: 16, fontWeight: "bold" },
   taskTime: { fontSize: 12, color: "#888" },
   checkboxStyles: {
-    width: 25,
-    height: 25,
+    width: 30,
+    height: 30,
     marginRight: 15,
   },
   defaultTitle: {

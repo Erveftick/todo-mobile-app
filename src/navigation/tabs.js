@@ -1,11 +1,11 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet } from "react-native";
-import { View, Text, Image, TouchableOpacity } from "react-native-ui-lib";
+import { View, Text, TouchableOpacity } from "react-native-ui-lib";
 
 import HomeScreen from "../screens/HomeScreen";
 import TasksScreen from "../screens/TasksScreen";
-import ColorScreen from "../screens/ColorScreen";
+import BoxScreen from "../screens/BoxScreen";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHome, faList, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -89,7 +89,7 @@ const Tabs = () => {
       <Tab.Screen
         key="Post"
         name="Post"
-        component={ColorScreen}
+        component={BoxScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
