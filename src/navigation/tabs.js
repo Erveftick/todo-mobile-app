@@ -5,7 +5,6 @@ import { View, Text, TouchableOpacity } from "react-native-ui-lib";
 
 import HomeScreen from "../screens/HomeScreen";
 import TasksScreen from "../screens/TasksScreen";
-import BoxScreen from "../screens/BoxScreen";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHome, faList, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -89,7 +88,7 @@ const Tabs = () => {
       <Tab.Screen
         key="Post"
         name="Post"
-        component={BoxScreen}
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>

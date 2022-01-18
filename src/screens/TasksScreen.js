@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
-import { StyleSheet, FlatList } from "react-native";
-import { View, Text } from "react-native-ui-lib";
+import { StyleSheet } from "react-native";
+import { View } from "react-native-ui-lib";
 import TodoView from "../components/TodoView";
 
 const allTasks = [

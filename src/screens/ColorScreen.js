@@ -1,7 +1,5 @@
 import React, { useReducer } from "react";
-import reactDom from "react-dom";
-import { Text, StyleSheet, View, Button } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { StyleSheet, View } from "react-native";
 import ChangeColorButtons from "../components/ChangeColorComponent";
 
 const ColorScreen = () => {

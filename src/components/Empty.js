@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, View, Text } from "react-native-ui-lib";
+import { View, Text } from "react-native-ui-lib";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";

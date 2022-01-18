@@ -1,11 +1,11 @@
 import React from "react";
-import { StyleSheet, FlatList, Divider } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import { View, Text, Colors } from "react-native-ui-lib";
 import TaskListItem from "../components/ListItem";
 import Empty from "./Empty";
 
 const TodoView = ({ label, data, onUpdateCheckbox }) => {
-  const isDataEmpty = data.length == 0;
+  const isDataEmpty = data.length === 0;
 
   return isDataEmpty ? (
     <View style={{ marginBottom: 50 }}>

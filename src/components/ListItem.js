@@ -1,17 +1,23 @@
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import React, { useState, useRef, useEffect } from "react";
+import { StyleSheet, Animated } from "react-native";
 import { Checkbox, View, Text } from "react-native-ui-lib";
-import BoxScreen from "../screens/BoxScreen";
 
 const TaskListItem = ({ data, action }) => {
+  const [visible, setVisible] = useState(data.completed);
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+
   return (
-    <BoxScreen>
+    <Animated.View
+      style={{
+        opacity: fadeAnim,
+      }}
+    >
       <View style={{ flexDirection: "row", marginVertical: 7 }}>
         <View style={[styles.taskBox]}>
           <Text
             style={[
               styles.taskTitle,
-              data.completed ? styles.completedTitle : styles.defaultTitle,
+              visible ? styles.completedTitle : styles.defaultTitle,
             ]}
           >
             {data.title}
@@ -20,16 +26,26 @@ const TaskListItem = ({ data, action }) => {
         </View>
         <Checkbox
           containerStyle={{ marginBottom: 20, marginLeft: 15 }}
-          value={data.completed}
+          value={visible}
           size={30}
-          onValueChange={() => action({ id: data.id })}
+          onValueChange={() => {
+            setVisible(!visible);
+            Animated.timing(fadeAnim, {
+              toValue: 0,
+              duration: 1500,
+              useNativeDriver: true,
+            }).start();
+            setTimeout(() => {
+              action({ id: data.id });
+            }, 1500);
+          }}
           style={[
             styles.checkboxStyles,
-            data.completed ? styles.checkboxShadow : null,
+            visible ? styles.checkboxShadow : null,
           ]}
         />
       </View>
-    </BoxScreen>
+    </Animated.View>
   );
 };
 
