@@ -5,22 +5,24 @@ import { View, Text, TouchableOpacity } from "react-native-ui-lib";
 
 import HomeScreen from "../screens/HomeScreen";
 import TasksScreen from "../screens/TasksScreen";
+import CreateTaskScreen from "../screens/CreateTaskScreen";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHome, faList, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Tab = createBottomTabNavigator();
 
-const CustomTabBarButton = ({ children, action }) => {
+const CustomTabBarButton = ({ children, onPress }) => {
+
   return (
     <TouchableOpacity
       style={{
-        top: Platform.OS === 'ios' ? 0 : -20,
+        top: Platform.OS === "ios" ? 0 : -20,
         justifyContent: "center",
         alignItems: "center",
         ...styles.shadow,
       }}
-      onPress={action}
+      onPress={onPress}
     >
       <View
         style={{
@@ -40,7 +42,13 @@ const CustomTabBarButton = ({ children, action }) => {
 const Tabs = () => {
   const TabScreenView = ({ name, icon, focused }) => {
     return (
-      <View style={{ alignItems: "center", justifyContent: "center", marginBottom: Platform.OS === 'ios' ? -30 : 0 }}>
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: Platform.OS === "ios" ? -30 : 0,
+        }}
+      >
         <FontAwesomeIcon
           icon={icon}
           resizeMode="contain"
@@ -86,21 +94,21 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        key="Post"
-        name="Post"
-        component={TasksScreen}
+        key="Create"
+        name="Create a new task"
+        component={CreateTaskScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <FontAwesomeIcon
-                icon={faPlus}
-                resizeMode="contain"
-                style={{
-                  width: 50,
-                  height: 50,
-                  color: "#fff",
-                  ...styles.shadow,
-                }}
-              />
+              icon={faPlus}
+              resizeMode="contain"
+              style={{
+                width: 50,
+                height: 50,
+                color: "#fff",
+                ...styles.shadow,
+              }}
+            />
           ),
           tabBarButton: (props) => {
             return <CustomTabBarButton {...props} />;

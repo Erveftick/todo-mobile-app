@@ -37,7 +37,7 @@ const TaskListItem = ({ data, action }) => {
             }).start();
             setTimeout(() => {
               action({ id: data.id });
-            }, 1500);
+            }, 1200);
           }}
           style={[
             styles.checkboxStyles,
