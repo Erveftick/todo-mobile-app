@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { View, Text, TouchableOpacity } from "react-native-ui-lib";
 
 import HomeScreen from "../screens/HomeScreen";
@@ -15,7 +15,7 @@ const CustomTabBarButton = ({ children, action }) => {
   return (
     <TouchableOpacity
       style={{
-        top: -20,
+        top: Platform.OS === 'ios' ? 0 : -20,
         justifyContent: "center",
         alignItems: "center",
         ...styles.shadow,
@@ -40,7 +40,7 @@ const CustomTabBarButton = ({ children, action }) => {
 const Tabs = () => {
   const TabScreenView = ({ name, icon, focused }) => {
     return (
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
+      <View style={{ alignItems: "center", justifyContent: "center", marginBottom: Platform.OS === 'ios' ? -30 : 0 }}>
         <FontAwesomeIcon
           icon={icon}
           resizeMode="contain"
@@ -88,11 +88,10 @@ const Tabs = () => {
       <Tab.Screen
         key="Post"
         name="Post"
-        component={HomeScreen}
+        component={TasksScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View>
-              <FontAwesomeIcon
+            <FontAwesomeIcon
                 icon={faPlus}
                 resizeMode="contain"
                 style={{
@@ -102,7 +101,6 @@ const Tabs = () => {
                   ...styles.shadow,
                 }}
               />
-            </View>
           ),
           tabBarButton: (props) => {
             return <CustomTabBarButton {...props} />;
@@ -142,7 +140,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
-    elevation: 5,
+    elevation: 25,
   },
 });
 
