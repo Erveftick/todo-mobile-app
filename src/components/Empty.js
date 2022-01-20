@@ -6,7 +6,7 @@ import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 
 const Empty = ({label}) => {
   return (
-    <View style={{ justifyContent: "center", alignItems: "center" }}>
+    <View style={{ justifyContent: "center", alignItems: "center", height: 250 }}>
       <FontAwesomeIcon
         icon={faFolderOpen}
         size={128}

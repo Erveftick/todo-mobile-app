@@ -1,32 +1,50 @@
 import React, { useState } from "react";
-import { StyleSheet, Platform, FlatList } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import {
   View,
-  TextField,
   Text,
+  TextField,
+  PanningProvider,
   Colors,
+  Dialog,
   Spacings,
   Button,
   DateTimePicker,
 } from "react-native-ui-lib";
-import TasksScreen from "./TasksScreen";
 import { DateTime } from "luxon";
 
-const tasks = [];
-
-const CreateTaskScreen = () => {
-  const [taskTitle, setTaskTitle] = useState('');
+const CreateTaskDialog = ({ isVisible, onClose, onAdd }) => {
+  const [taskTitle, setTaskTitle] = useState("");
   const [taskTime, setTaskTime] = useState(null);
 
+  const renderPannableHeader = () => {
+    return (
+      <View>
+        <Text text60BL style={{ marginTop: 5, marginBottom: 15 }}>
+          Create a new task
+        </Text>
+      </View>
+    );
+  };
+
   return (
-    <View style={{ padding: 15 }}>
+    <Dialog
+      useSafeArea
+      key={"DialogKey"}
+      panDirection={PanningProvider.Directions.DOWN}
+      renderPannableHeader={renderPannableHeader}
+      containerStyle={styles.dialogDesign}
+      visible={isVisible}
+      onDismiss={onClose}
+      ignoreBackgroundPress={false}
+    >
       <TextField
-        placeholder="Tap me!"
+        placeholder="e.g drink a glass of water"
         text50
         label={"Task title"}
         migrate
         value={taskTitle}
-        onChangeText={newValue => setTaskTitle(newValue)}
+        onChangeText={(newValue) => setTaskTitle(newValue)}
         containerStyle={{
           marginBottom: Spacings.s5,
           marginTop: Platform.OS === "ios" ? Spacings.s3 : Spacings.s1,
@@ -44,36 +62,28 @@ const CreateTaskScreen = () => {
       <Button
         label="Create a new task"
         disabled={taskTitle == "" || taskTime == null}
+        style={{ marginTop: Spacings.s3 }}
         onPress={() => {
-          tasks.push({
-            id: Math.random(),
+          onAdd({
             title: taskTitle,
             time: taskTime.toLocaleString(DateTime.TIME_24_SIMPLE),
-            completed: false,
           });
           setTaskTitle("");
           setTaskTime(null);
         }}
       />
-      <FlatList
-        keyExtractor={(task) => task.title}
-        data={tasks}
-        renderItem={({ item }) => {
-          return (
-            <View>
-              <Text>{item.id}</Text>
-              <Text>{item.title}</Text>
-              <Text>{item.time}</Text>
-              <Text>{item.completed}</Text>
-            </View>
-          );
-        }}
-      />
-    </View>
+    </Dialog>
   );
 };
 
 const styles = StyleSheet.create({
+  dialogDesign: {
+    backgroundColor: "#fff",
+    marginBottom: 30,
+    padding: 15,
+    borderRadius: 15,
+    zIndex: 9999,
+  },
   withUnderline: {
     borderBottomWidth: 1,
     borderColor: Colors.grey40,
@@ -84,4 +94,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateTaskScreen;
+export default CreateTaskDialog;

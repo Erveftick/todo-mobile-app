@@ -1,43 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Platform } from "react-native";
-import { View, Text, TouchableOpacity } from "react-native-ui-lib";
+import { View, Text } from "react-native-ui-lib";
 
 import HomeScreen from "../screens/HomeScreen";
 import TasksScreen from "../screens/TasksScreen";
-import CreateTaskScreen from "../screens/CreateTaskScreen";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faHome, faList, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faList } from "@fortawesome/free-solid-svg-icons";
 
 const Tab = createBottomTabNavigator();
-
-const CustomTabBarButton = ({ children, onPress }) => {
-
-  return (
-    <TouchableOpacity
-      style={{
-        top: Platform.OS === "ios" ? 0 : -20,
-        justifyContent: "center",
-        alignItems: "center",
-        ...styles.shadow,
-      }}
-      onPress={onPress}
-    >
-      <View
-        style={{
-          width: 65,
-          height: 65,
-          borderRadius: 35,
-          backgroundColor: "#5848FF",
-          ...styles.shadow,
-        }}
-      >
-        {children}
-      </View>
-    </TouchableOpacity>
-  );
-};
 
 const Tabs = () => {
   const TabScreenView = ({ name, icon, focused }) => {
@@ -74,13 +46,6 @@ const Tabs = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
-        tabBarStyle: [
-          {
-            ...styles.bottomMenu,
-            ...styles.shadow,
-          },
-          null,
-        ],
       }}
     >
       <Tab.Screen
@@ -91,28 +56,6 @@ const Tabs = () => {
           tabBarIcon: ({ focused }) => (
             <TabScreenView focused={focused} icon={faHome} name="Home" />
           ),
-        }}
-      />
-      <Tab.Screen
-        key="Create"
-        name="Create a new task"
-        component={CreateTaskScreen}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <FontAwesomeIcon
-              icon={faPlus}
-              resizeMode="contain"
-              style={{
-                width: 50,
-                height: 50,
-                color: "#fff",
-                ...styles.shadow,
-              }}
-            />
-          ),
-          tabBarButton: (props) => {
-            return <CustomTabBarButton {...props} />;
-          },
         }}
       />
       <Tab.Screen
@@ -130,16 +73,6 @@ const Tabs = () => {
 };
 
 const styles = StyleSheet.create({
-  bottomMenu: {
-    position: "absolute",
-    bottom: 25,
-    left: 20,
-    right: 20,
-    elevation: 0,
-    backgroundColor: "#ffffff",
-    borderRadius: 15,
-    height: 60,
-  },
   shadow: {
     shadowColor: "#7F5DF0",
     shadowOffset: {

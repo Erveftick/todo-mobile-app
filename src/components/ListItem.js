@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { StyleSheet, Animated } from "react-native";
 import { Checkbox, View, Text } from "react-native-ui-lib";
 
