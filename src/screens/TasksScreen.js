@@ -4,11 +4,12 @@ import { View, Button } from "react-native-ui-lib";
 import TodoView from "../components/TodoView";
 import CreateTaskDialog from "../components/CreateTaskDialog";
 
-const allTasks = [
+export const allTasks = [
   {
     id: 1,
     title: "Create mobile app",
     time: "12:00",
+    date: "15/02/2022",
     completed: true,
     important: true,
   },
@@ -16,6 +17,7 @@ const allTasks = [
     id: 2,
     title: "Go to grocery shop",
     time: "14:00",
+    date: "15/02/2022",
     completed: true,
     important: true,
   },
@@ -23,6 +25,15 @@ const allTasks = [
     id: 3,
     title: "Drink coffee",
     time: "09:00",
+    date: "15/02/2022",
+    completed: false,
+    important: false,
+  },
+  {
+    id: 4,
+    title: "Drink water",
+    time: "08:00",
+    date: "15/02/2022",
     completed: false,
     important: false,
   },
@@ -30,13 +41,21 @@ const allTasks = [
     id: 5,
     title: "Drink 2 cup of tea",
     time: "17:00",
+    date: "15/02/2022",
     completed: false,
     important: false,
   },
-  { id: 6, title: "Cry", time: "12:00", completed: true, important: false },
+  {
+    id: 6,
+    title: "Cry",
+    time: "12:00",
+    date: "15/02/2022",
+    completed: true,
+    important: false,
+  },
 ];
 
-const reducer = (state, action) => {
+export const reducer = (state, action) => {
   switch (action.type) {
     case "SWITCH_COMPLITED":
       return {
@@ -70,14 +89,19 @@ const reducer = (state, action) => {
   }
 };
 
-const initialState = { data: allTasks };
+export const initialState = { data: allTasks };
 
 const TasksScreen = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const toDoTasks = state.data
     .filter((task) => task.completed == false)
-    .sort(function(a,b){return a.important-b.important})
+    .sort(function (a, b) {
+      return a.important - b.important;
+    })
+    .sort(function (a, b) {
+      return a.date - b.date;
+    })
     .reverse();
   const doneTasks = state.data.filter((task) => task.completed == true);
 
