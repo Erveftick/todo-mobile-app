@@ -5,10 +5,34 @@ import TodoView from "../components/TodoView";
 import CreateTaskDialog from "../components/CreateTaskDialog";
 
 const allTasks = [
-  { id: 1, title: "Create mobile app", time: "12:00", completed: true, important: true },
-  { id: 2, title: "Go to grocery shop", time: "14:00", completed: true, important: true},
-  { id: 3, title: "Drink coffee", time: "09:00", completed: false, important: false },
-  { id: 5, title: "Drink 2 cup of tea", time: "17:00", completed: false, important: false },
+  {
+    id: 1,
+    title: "Create mobile app",
+    time: "12:00",
+    completed: true,
+    important: true,
+  },
+  {
+    id: 2,
+    title: "Go to grocery shop",
+    time: "14:00",
+    completed: true,
+    important: true,
+  },
+  {
+    id: 3,
+    title: "Drink coffee",
+    time: "09:00",
+    completed: false,
+    important: false,
+  },
+  {
+    id: 5,
+    title: "Drink 2 cup of tea",
+    time: "17:00",
+    completed: false,
+    important: false,
+  },
   { id: 6, title: "Cry", time: "12:00", completed: true, important: false },
 ];
 
@@ -34,13 +58,14 @@ const reducer = (state, action) => {
         data: [
           ...state.data,
           {
-          id: state.data.length + 1,
-          title: title,
-          date: date,
-          time: time,
-          completed: false,
-          important: important,
-        }]
+            id: state.data.length + 1,
+            title: title,
+            date: date,
+            time: time,
+            completed: false,
+            important: important,
+          },
+        ],
       };
   }
 };
@@ -50,7 +75,10 @@ const initialState = { data: allTasks };
 const TasksScreen = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
-  const toDoTasks = state.data.filter((task) => task.completed == false);
+  const toDoTasks = state.data
+    .filter((task) => task.completed == false)
+    .sort(function(a,b){return a.important-b.important})
+    .reverse();
   const doneTasks = state.data.filter((task) => task.completed == true);
 
   return (
@@ -59,8 +87,9 @@ const TasksScreen = () => {
         isVisible={isDialogVisible}
         onClose={() => setIsDialogVisible(!isDialogVisible)}
         onAdd={(object) => {
-          dispatch({ type: "ADD_TASK", payload: object })
-          setIsDialogVisible(!isDialogVisible)}}
+          dispatch({ type: "ADD_TASK", payload: object });
+          setIsDialogVisible(!isDialogVisible);
+        }}
       />
       <TodoView
         label="To do"
