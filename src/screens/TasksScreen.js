@@ -2,7 +2,7 @@ import React, { useReducer, useState } from "react";
 import { StyleSheet } from "react-native";
 import { View, Button } from "react-native-ui-lib";
 import TodoView from "../components/TodoView";
-import CreateTaskDialog from "./CreateTaskDialog";
+import CreateTaskDialog from "../components/CreateTaskDialog";
 
 const allTasks = [
   { id: 1, title: "Create mobile app", time: "12:00", completed: true },
@@ -45,7 +45,7 @@ const reducer = (state, action) => {
       };
     case "ADD_TASK":
       console.log(action.payload);
-      const { title, time } = action.payload;
+      const { title, time, date } = action.payload;
       return {
         ...state,
         data: [
@@ -53,6 +53,7 @@ const reducer = (state, action) => {
           {
           id: state.data.length + 1,
           title: title,
+          date: date,
           time: time,
           completed: false,
         }]

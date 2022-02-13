@@ -22,6 +22,7 @@ const TaskListItem = ({ data, action }) => {
           >
             {data.title}
           </Text>
+          <Text style={[styles.taskTime]}>{data.date}</Text>
           <Text style={[styles.taskTime]}>{data.time}</Text>
         </View>
         <Checkbox

@@ -10,12 +10,16 @@ import {
   Spacings,
   Button,
   DateTimePicker,
+  Checkbox,
 } from "react-native-ui-lib";
+import moment from "moment";
 import { DateTime } from "luxon";
 
 const CreateTaskDialog = ({ isVisible, onClose, onAdd }) => {
   const [taskTitle, setTaskTitle] = useState("");
   const [taskTime, setTaskTime] = useState(null);
+  const [taskDate, setTaskDate] = useState(null);
+  const [taskTodayDate, setTodayDate] = useState(true);
 
   const renderPannableHeader = () => {
     return (
@@ -51,6 +55,28 @@ const CreateTaskDialog = ({ isVisible, onClose, onAdd }) => {
         }}
         fieldStyle={styles.withUnderline}
       />
+      <Checkbox
+        containerStyle={{ marginBottom: 20 }}
+        size={30}
+        value={taskTodayDate}
+        onValueChange={() => {
+          setTodayDate(!taskTodayDate);
+        }}
+        label={"Today"}
+        style={[
+          styles.checkboxStyles,
+          taskTodayDate ? styles.checkboxShadow : null,
+        ]}
+      />
+      {taskTodayDate ? null : (
+        <DateTimePicker
+          mode={"date"}
+          title={"Date"}
+          placeholder={"Select date"}
+          onChange={(newDate) => setTaskDate(newDate)}
+          value={taskDate}
+        />
+      )}
       <DateTimePicker
         mode={"time"}
         title={"Time"}
@@ -66,10 +92,12 @@ const CreateTaskDialog = ({ isVisible, onClose, onAdd }) => {
         onPress={() => {
           onAdd({
             title: taskTitle,
-            time: taskTime.toLocaleString(DateTime.TIME_24_SIMPLE),
+            date: moment(taskTodayDate ? taskTime : taskDate).format("DD/MM/YYYY"),
+            time: moment(taskTime).format("HH:mm"),
           });
           setTaskTitle("");
           setTaskTime(null);
+          setTaskDate(null);
         }}
       />
     </Dialog>
@@ -91,6 +119,18 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: 30,
+  },
+  checkboxStyles: {
+    width: 30,
+    height: 30,
+    margin: 0,
+  },
+  checkboxShadow: {
+    shadowColor: "#4548FF",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.65,
+    shadowRadius: 5,
+    elevation: 12,
   },
 });
 
