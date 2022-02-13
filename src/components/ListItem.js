@@ -23,10 +23,10 @@ const TaskListItem = ({ data, action }) => {
               visible ? styles.completedTitle : styles.defaultTitle,
             ]}
           >
-            {data.important ? (
+            {(data.important && !data.completed) ? (
               <FontAwesomeIcon
                 style={[
-                  data.completed ? styles.completedTitle : styles.importantIcon,
+                  data.completed ? null : styles.importantIcon,
                 ]}
                 icon={faFireAlt}
               />
@@ -87,6 +87,9 @@ const styles = StyleSheet.create({
   importantIcon: {
     color: "#ff4d4f",
     marginRight: 5,
+  },
+  clearImportant: {
+    display: "none",
   },
   checkboxShadow: {
     shadowColor: "#4548FF",
