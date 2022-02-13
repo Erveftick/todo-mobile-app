@@ -28,7 +28,7 @@ const reducer = (state, action) => {
       };
     case "ADD_TASK":
       console.log(action.payload);
-      const { title, time, date } = action.payload;
+      const { title, time, date, important } = action.payload;
       return {
         ...state,
         data: [
@@ -39,6 +39,7 @@ const reducer = (state, action) => {
           date: date,
           time: time,
           completed: false,
+          important: important,
         }]
       };
   }

@@ -18,6 +18,7 @@ const CreateTaskDialog = ({ isVisible, onClose, onAdd }) => {
   const [taskTitle, setTaskTitle] = useState("");
   const [taskTime, setTaskTime] = useState(null);
   const [taskDate, setTaskDate] = useState(null);
+  const [taskImportant, setTaskImportant] = useState(false);
   const [taskTodayDate, setTodayDate] = useState(true);
 
   const renderPannableHeader = () => {
@@ -27,6 +28,21 @@ const CreateTaskDialog = ({ isVisible, onClose, onAdd }) => {
           Create a new task
         </Text>
       </View>
+    );
+  };
+
+  const RenderCheckbox = ({ value, changeValueFunc, label }) => {
+    return (
+      <Checkbox
+        containerStyle={{ marginBottom: 20 }}
+        size={30}
+        value={value}
+        onValueChange={() => {
+          changeValueFunc(!value);
+        }}
+        label={label}
+        style={[styles.checkboxStyles, value ? styles.checkboxShadow : null]}
+      />
     );
   };
 
@@ -54,19 +70,18 @@ const CreateTaskDialog = ({ isVisible, onClose, onAdd }) => {
         }}
         fieldStyle={styles.withUnderline}
       />
-      <Checkbox
-        containerStyle={{ marginBottom: 20 }}
-        size={30}
-        value={taskTodayDate}
-        onValueChange={() => {
-          setTodayDate(!taskTodayDate);
-        }}
-        label={"Today"}
-        style={[
-          styles.checkboxStyles,
-          taskTodayDate ? styles.checkboxShadow : null,
-        ]}
-      />
+      <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+        <RenderCheckbox
+          label={"Today"}
+          value={taskTodayDate}
+          changeValueFunc={setTodayDate}
+        />
+        <RenderCheckbox
+          label={"Important"}
+          value={taskImportant}
+          changeValueFunc={setTaskImportant}
+        />
+      </View>
       {taskTodayDate ? null : (
         <DateTimePicker
           mode={"date"}
@@ -91,12 +106,17 @@ const CreateTaskDialog = ({ isVisible, onClose, onAdd }) => {
         onPress={() => {
           onAdd({
             title: taskTitle,
-            date: moment(taskTodayDate ? taskTime : taskDate).format("DD/MM/YYYY"),
+            date: moment(taskTodayDate ? taskTime : taskDate).format(
+              "DD/MM/YYYY"
+            ),
             time: moment(taskTime).format("HH:mm"),
+            important: taskImportant,
           });
           setTaskTitle("");
           setTaskTime(null);
           setTaskDate(null);
+          setTodayDate(true);
+          setTaskImportant(false);
         }}
       />
     </Dialog>
