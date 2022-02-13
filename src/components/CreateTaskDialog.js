@@ -13,7 +13,6 @@ import {
   Checkbox,
 } from "react-native-ui-lib";
 import moment from "moment";
-import { DateTime } from "luxon";
 
 const CreateTaskDialog = ({ isVisible, onClose, onAdd }) => {
   const [taskTitle, setTaskTitle] = useState("");

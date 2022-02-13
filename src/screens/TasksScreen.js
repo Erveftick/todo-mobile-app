@@ -5,28 +5,11 @@ import TodoView from "../components/TodoView";
 import CreateTaskDialog from "../components/CreateTaskDialog";
 
 const allTasks = [
-  { id: 1, title: "Create mobile app", time: "12:00", completed: true },
-  { id: 2, title: "Go to grocery shop", time: "14:00", completed: true },
-  { id: 3, title: "Drink coffee", time: "09:00", completed: false },
-  { id: 4, title: "Send dickpic to Lyosha", time: "12:00", completed: false },
-  { id: 5, title: "Drink 2 cup of tea", time: "17:00", completed: false },
-  { id: 6, title: "Cry", time: "12:00", completed: true },
-  { id: 7, title: "Create mobile app1", time: "12:00", completed: false },
-  { id: 8, title: "Go to grocery shop1", time: "12:00", completed: true },
-  { id: 9, title: "Drink coffee1", time: "12:00", completed: true },
-  {
-    id: 10,
-    title: "Send dickpic to Lyosha1",
-    time: "12:00",
-    completed: false,
-  },
-  { id: 11, title: "Drink 2 cup of tea1", time: "12:00", completed: true },
-  { id: 12, title: "Cry1", time: "12:00", completed: false },
-  { id: 13, title: "Another one1", time: "12:00", completed: true },
-  { id: 14, title: "24 one1", time: "12:00", completed: false },
-  { id: 15, title: "42 one1", time: "12:00", completed: false },
-  { id: 16, title: "243 one1", time: "12:00", completed: false },
-  { id: 17, title: "Another one", time: "12:00", completed: false },
+  { id: 1, title: "Create mobile app", time: "12:00", completed: true, important: true },
+  { id: 2, title: "Go to grocery shop", time: "14:00", completed: true, important: true},
+  { id: 3, title: "Drink coffee", time: "09:00", completed: false, important: false },
+  { id: 5, title: "Drink 2 cup of tea", time: "17:00", completed: false, important: false },
+  { id: 6, title: "Cry", time: "12:00", completed: true, important: false },
 ];
 
 const reducer = (state, action) => {

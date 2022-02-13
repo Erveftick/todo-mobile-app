@@ -2,6 +2,9 @@ import React, { useState, useRef } from "react";
 import { StyleSheet, Animated } from "react-native";
 import { Checkbox, View, Text } from "react-native-ui-lib";
 
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faFireAlt } from "@fortawesome/free-solid-svg-icons";
+
 const TaskListItem = ({ data, action }) => {
   const [visible, setVisible] = useState(data.completed);
   const fadeAnim = useRef(new Animated.Value(1)).current;
@@ -20,10 +23,20 @@ const TaskListItem = ({ data, action }) => {
               visible ? styles.completedTitle : styles.defaultTitle,
             ]}
           >
+            {data.important ? (
+              <FontAwesomeIcon
+                style={[
+                  data.completed ? styles.completedTitle : styles.importantIcon,
+                ]}
+                icon={faFireAlt}
+              />
+            ) : null}
             {data.title}
           </Text>
-          <Text style={[styles.taskTime]}>{data.date}</Text>
-          <Text style={[styles.taskTime]}>{data.time}</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={[styles.taskTime]}>{data.time}</Text>
+            <Text style={[styles.taskTime]}>{data.date}</Text>
+          </View>
         </View>
         <Checkbox
           containerStyle={{ marginBottom: 20, marginLeft: 15 }}
@@ -56,7 +69,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   taskTitle: { fontSize: 16, fontWeight: "bold" },
-  taskTime: { fontSize: 12, color: "#888" },
+  taskTime: { fontSize: 12, color: "#888", marginRight: 10 },
   checkboxStyles: {
     width: 30,
     height: 30,
@@ -70,6 +83,10 @@ const styles = StyleSheet.create({
     textDecorationLine: "line-through",
     textDecorationStyle: "solid",
     color: "#4548FF",
+  },
+  importantIcon: {
+    color: "#ff4d4f",
+    marginRight: 5,
   },
   checkboxShadow: {
     shadowColor: "#4548FF",
