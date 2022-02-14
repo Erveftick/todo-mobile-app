@@ -1,7 +1,8 @@
 import React, { useReducer } from "react";
-import { StyleSheet, FlatList } from "react-native";
-import { View, Text } from "react-native-ui-lib";
+import { StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, Button } from "react-native-ui-lib";
 import { reducer, initialState } from "./TasksScreen";
+import Header from "../components/Header";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCheck, faPlay, faStop } from "@fortawesome/free-solid-svg-icons";
@@ -11,13 +12,14 @@ import moment from "moment";
 const HomeScreen = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const undoneTasks = state.data
-    .filter((task) => task.completed == false)
-    .sort((a, b) => {
-      const diffA = a.time - moment().format("HH:mm");
-      const diffB = b.time - moment().format("HH:mm");
-      return diffA - diffB;
-    });
+  const undoneTasks = []
+  // state.data
+  //   .filter((task) => task.completed == false)
+  //   .sort((a, b) => {
+  //     const diffA = a.time - moment().format("HH:mm");
+  //     const diffB = b.time - moment().format("HH:mm");
+  //     return diffA - diffB;
+  //   });
   const doneTasks = state.data.filter((task) => task.completed == true);
 
   console.log(undoneTasks);
@@ -55,8 +57,8 @@ const HomeScreen = () => {
     return (
       <View
         style={{
-          marginHorizontal: 30,
-          height: 470,
+          marginHorizontal: 25,
+          height: 500,
           justifyContent: "center",
         }}
       >
@@ -119,11 +121,30 @@ const HomeScreen = () => {
 
   const MainScreen = () => {
     return (
-      <View>
+      <View style={styles.container}>
+        <Header />
+        <View
+          style={[
+            styles.circle,
+            undoneTasks.length !== 0
+              ? styles.hasTaskCircle
+              : styles.noTaskCircle,
+          ]}
+        />
         <InfoPlate />
-        <View style={styles.nearestTaskPlate}>
-          <FacadeList />
-        </View>
+        {undoneTasks.length !== 0 ? (
+          <View style={styles.nearestTaskPlate}>
+            <FacadeList />
+          </View>
+        ) : (
+          <Button
+            outline={true}
+            label={"Add a new task"}
+            outlineWidth={2}
+            labelStyle={{ marginVertical: 5 }}
+            style={{ marginHorizontal: 25 }}
+          />
+        )}
       </View>
     );
   };
@@ -132,8 +153,28 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingVertical: 50,
+    backgroundColor: "#fff",
+  },
   text: {
     fontSize: 30,
+  },
+  circle: {
+    width: 700,
+    height: 700,
+    borderRadius: 500 / 1.5,
+    backgroundColor: "rgba(69, 72, 255, 0.07)",
+    position: "absolute",
+  },
+  hasTaskCircle: {
+    left: -370,
+    top: 100,
+  },
+  noTaskCircle: {
+    left: -250,
+    top: -530,
   },
   mainTitle: {
     fontSize: 54,
@@ -152,12 +193,12 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 6,
+      height: 12,
     },
-    shadowOpacity: 0.39,
-    shadowRadius: 8.3,
+    shadowOpacity: 0.56,
+    shadowRadius: 16.0,
 
-    elevation: 13,
+    elevation: 24,
   },
   listItem: {
     marginVertical: 20,
@@ -177,11 +218,11 @@ const styles = StyleSheet.create({
   firstListTime: {
     color: "#4548FF",
     fontSize: 20,
-    marginLeft: 30,
+    marginLeft: 25,
   },
   listTime: {
     fontSize: 20,
-    marginLeft: 30,
+    marginLeft: 25,
   },
 });
 

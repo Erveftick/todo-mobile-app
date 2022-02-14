@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { View, Button } from "react-native-ui-lib";
 import TodoView from "../components/TodoView";
 import CreateTaskDialog from "../components/CreateTaskDialog";
+import Header from "../components/Header";
 
 export const allTasks = [
   {
@@ -106,47 +107,54 @@ const TasksScreen = () => {
   const doneTasks = state.data.filter((task) => task.completed == true);
 
   return (
-    <View style={{ padding: 20 }}>
-      <CreateTaskDialog
-        isVisible={isDialogVisible}
-        onClose={() => setIsDialogVisible(!isDialogVisible)}
-        onAdd={(object) => {
-          dispatch({ type: "ADD_TASK", payload: object });
-          setIsDialogVisible(!isDialogVisible);
-        }}
-      />
-      <TodoView
-        label="To do"
-        viewStyles={{ height: 250 }}
-        data={toDoTasks}
-        onUpdateCheckbox={(id) =>
-          dispatch({ type: "SWITCH_COMPLITED", payload: id })
-        }
-      />
-      <TodoView
-        label="Done"
-        viewStyles={{ height: 250 }}
-        data={doneTasks}
-        onUpdateCheckbox={(id) =>
-          dispatch({ type: "SWITCH_COMPLITED", payload: id })
-        }
-      />
-      <Button
-        style={{
-          position: "absolute",
-          bottom: -10,
-          alignItems: "center",
-          justifyContent: "center",
-          alignSelf: "center",
-        }}
-        label={"Add a new task!"}
-        onPress={() => setIsDialogVisible(!isDialogVisible)}
-      />
+    <View style={styles.container}>
+      <Header />
+      <View style={{ paddingHorizontal: 25, paddingVertical: 15 }}>
+        <CreateTaskDialog
+          isVisible={isDialogVisible}
+          onClose={() => setIsDialogVisible(!isDialogVisible)}
+          onAdd={(object) => {
+            dispatch({ type: "ADD_TASK", payload: object });
+            setIsDialogVisible(!isDialogVisible);
+          }}
+        />
+        <TodoView
+          label="To do"
+          viewStyles={{ height: 250 }}
+          data={toDoTasks}
+          onUpdateCheckbox={(id) =>
+            dispatch({ type: "SWITCH_COMPLITED", payload: id })
+          }
+        />
+        <TodoView
+          label="Done"
+          viewStyles={{ height: 250 }}
+          data={doneTasks}
+          onUpdateCheckbox={(id) =>
+            dispatch({ type: "SWITCH_COMPLITED", payload: id })
+          }
+        />
+        <Button
+          style={{
+            position: "absolute",
+            bottom: -10,
+            alignItems: "center",
+            justifyContent: "center",
+            alignSelf: "center",
+          }}
+          label={"Add a new task!"}
+          onPress={() => setIsDialogVisible(!isDialogVisible)}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 50,
+    backgroundColor: "#fff",
+  },
   todoTitle: {
     color: "#888",
     fontWeight: "bold",
