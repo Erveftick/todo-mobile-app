@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
   checkboxStyles: {
     width: 30,
     height: 30,
-    marginRight: 15,
   },
   defaultTitle: {
     color: "black",
