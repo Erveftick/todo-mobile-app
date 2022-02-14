@@ -1,25 +1,25 @@
 import React, { useReducer } from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
-import { View, Text, Button } from "react-native-ui-lib";
+import { StyleSheet } from "react-native";
+import { View, Text, Button, TouchableOpacity } from "react-native-ui-lib";
 import { reducer, initialState } from "./TasksScreen";
 import Header from "../components/Header";
+import TasksScreen from "./TasksScreen";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCheck, faPlay, faStop } from "@fortawesome/free-solid-svg-icons";
 
 import moment from "moment";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const undoneTasks = []
-  // state.data
-  //   .filter((task) => task.completed == false)
-  //   .sort((a, b) => {
-  //     const diffA = a.time - moment().format("HH:mm");
-  //     const diffB = b.time - moment().format("HH:mm");
-  //     return diffA - diffB;
-  //   });
+  const undoneTasks = state.data
+    .filter((task) => task.completed == false)
+    .sort((a, b) => {
+      const diffA = a.time - moment().format("HH:mm");
+      const diffB = b.time - moment().format("HH:mm");
+      return diffA - diffB;
+    });
   const doneTasks = state.data.filter((task) => task.completed == true);
 
   console.log(undoneTasks);
@@ -79,41 +79,47 @@ const HomeScreen = () => {
     return undoneTasks.map((task, i) => {
       return (
         <View key={i}>
-          <View style={styles.listItem}>
-            <Text style={i === 0 ? styles.firstListTitle : styles.listTitle}>
-              {task.title}
-            </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Tasks");
+            }}
+          >
+            <View style={styles.listItem}>
+              <Text style={i === 0 ? styles.firstListTitle : styles.listTitle}>
+                {task.title}
+              </Text>
+              <View
+                style={{
+                  marginLeft: "auto",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                {i === 0 ? (
+                  <>
+                    <Text
+                      style={i === 0 ? styles.firstListTime : styles.listTime}
+                    >
+                      {task.time}
+                    </Text>
+                    <FontAwesomeIcon
+                      style={{ marginLeft: 40, color: "#4548FF" }}
+                      icon={faStop}
+                    />
+                  </>
+                ) : (
+                  <FontAwesomeIcon style={{ color: "#888" }} icon={faPlay} />
+                )}
+              </View>
+            </View>
             <View
               style={{
-                marginLeft: "auto",
-                flexDirection: "row",
-                alignItems: "center",
+                borderBottomColor: "#999",
+                opacity: 0.3,
+                borderBottomWidth: 1,
               }}
-            >
-              {i === 0 ? (
-                <>
-                  <Text
-                    style={i === 0 ? styles.firstListTime : styles.listTime}
-                  >
-                    {task.time}
-                  </Text>
-                  <FontAwesomeIcon
-                    style={{ marginLeft: 40, color: "#4548FF" }}
-                    icon={faStop}
-                  />
-                </>
-              ) : (
-                <FontAwesomeIcon style={{ color: "#888" }} icon={faPlay} />
-              )}
-            </View>
-          </View>
-          <View
-            style={{
-              borderBottomColor: "#999",
-              opacity: 0.3,
-              borderBottomWidth: 1,
-            }}
-          />
+            />
+          </TouchableOpacity>
         </View>
       );
     });
@@ -143,6 +149,9 @@ const HomeScreen = () => {
             outlineWidth={2}
             labelStyle={{ marginVertical: 5 }}
             style={{ marginHorizontal: 25 }}
+            onPress={() => {
+              navigation.navigate("Tasks");
+            }}
           />
         )}
       </View>
