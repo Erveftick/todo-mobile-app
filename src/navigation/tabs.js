@@ -1,17 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StyleSheet, Platform } from "react-native";
-import { View, Text } from "react-native-ui-lib";
+import { StyleSheet, Platform, Keyboard } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native-ui-lib";
 
 import HomeScreen from "../screens/HomeScreen";
 import TasksScreen from "../screens/TasksScreen";
+import CreateTaskScreen from "../screens/CreateTaskScreen";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faHome, faList } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faList, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true); // or some other action
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false); // or some other action
+      }
+    );
+  
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   const TabScreenView = ({ name, icon, focused }) => {
     return (
       <View
@@ -42,11 +64,48 @@ const Tabs = () => {
     );
   };
 
+  const CreateTaskButton = ({ children, onPress }) => {
+    return (
+      <TouchableOpacity
+        style={{
+          top: -20,
+          justifyContent: "center",
+          alignItems: "center",
+          ...styles.shadow,
+        }}
+        onPress={onPress}
+      >
+        <View
+          style={{
+            width: 70,
+            height: 70,
+            borderRadius: 35,
+            backgroundColor: "#5848FF",
+          }}
+        >
+          {children}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
+        tabBarHideOnKeyboard: true,
+        tabBarStyle: {
+          position: "absolute",
+          bottom: (isKeyboardVisible ? -25 : 25),
+          left: 20,
+          right: 20,
+          elevation: 0,
+          backgroundColor: "#ffffff",
+          height: 60,
+          borderRadius: 15,
+          ...styles.shadow,
+        },
       }}
     >
       <Tab.Screen
@@ -57,6 +116,25 @@ const Tabs = () => {
           tabBarIcon: ({ focused }) => (
             <TabScreenView focused={focused} icon={faHome} name="Home" />
           ),
+        }}
+      />
+      <Tab.Screen
+        key="Create"
+        name="Create"
+        component={CreateTaskScreen}
+        options={{
+          tabBarIcon: () => (
+            <FontAwesomeIcon
+              icon={faPlus}
+              resizeMode="contain"
+              style={{
+                width: 30,
+                height: 30,
+                color: "#fff",
+              }}
+            />
+          ),
+          tabBarButton: (props) => <CreateTaskButton {...props} />,
         }}
       />
       <Tab.Screen

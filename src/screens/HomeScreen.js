@@ -1,14 +1,17 @@
 import React, { useReducer } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Animated, Dimensions } from "react-native";
 import { View, Text, Button, TouchableOpacity } from "react-native-ui-lib";
 import { reducer, initialState } from "./TasksScreen";
 import Header from "../components/Header";
-import TasksScreen from "./TasksScreen";
+import { LinearGradient } from "expo-linear-gradient";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCheck, faPlay, faStop } from "@fortawesome/free-solid-svg-icons";
 
 import moment from "moment";
+
+var width = Dimensions.get("window").width; //full width
+var height = Dimensions.get("window").height; //full height
 
 const HomeScreen = ({ navigation }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -21,8 +24,6 @@ const HomeScreen = ({ navigation }) => {
       return diffA - diffB;
     });
   const doneTasks = state.data.filter((task) => task.completed == true);
-
-  console.log(undoneTasks);
 
   const screenData =
     undoneTasks.length !== 0
@@ -112,20 +113,23 @@ const HomeScreen = ({ navigation }) => {
                 )}
               </View>
             </View>
-            <View
-              style={{
-                borderBottomColor: "#999",
-                opacity: 0.3,
-                borderBottomWidth: 1,
-              }}
-            />
           </TouchableOpacity>
+          <View
+            style={{
+              borderBottomColor: "#999",
+              opacity: 0.3,
+              borderBottomWidth: 1,
+            }}
+          />
         </View>
       );
     });
   };
 
   const MainScreen = () => {
+    const AnimatedLinearGradient =
+      Animated.createAnimatedComponent(LinearGradient);
+
     return (
       <View style={styles.container}>
         <Header />
@@ -139,9 +143,16 @@ const HomeScreen = ({ navigation }) => {
         />
         <InfoPlate />
         {undoneTasks.length !== 0 ? (
-          <View style={styles.nearestTaskPlate}>
-            <FacadeList />
-          </View>
+          <>
+            <View style={styles.nearestTaskPlate}>
+              <FacadeList />
+              <LinearGradient
+                locations={[0.1, 0.45]}
+                colors={["rgba(255,255,255,0)", "#FFF"]}
+                style={styles.gradient}
+              />
+            </View>
+          </>
         ) : (
           <Button
             outline={true}
@@ -194,9 +205,15 @@ const styles = StyleSheet.create({
     color: "#888",
     marginLeft: 7,
   },
+  gradient: {
+    height: 150,
+    width: width,
+    position: "absolute",
+    bottom: 0,
+  },
   nearestTaskPlate: {
     backgroundColor: "#fff",
-    height: 700,
+    height: 300,
     borderRadius: 30,
     padding: 15,
     shadowColor: "#000",

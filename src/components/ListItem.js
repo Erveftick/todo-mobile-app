@@ -39,7 +39,7 @@ const TaskListItem = ({ data, action }) => {
           </View>
         </View>
         <Checkbox
-          containerStyle={{ marginBottom: 20, marginLeft: 15 }}
+          containerStyle={{ marginBottom: 20, marginRight: 12, zIndex: 999 }}
           value={visible}
           size={30}
           onValueChange={() => {
